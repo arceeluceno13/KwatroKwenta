@@ -1,21 +1,17 @@
-"use client";
-
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
 import LeftPanel from "@/components/left-panel";
-import { useSession } from "next-auth/react";
 
-export default function Expenses() {
-  const { status } = useSession();
+export default async function Expenses() {
+  const session = await getServerSession(authOptions);
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (status === "unauthenticated") {
-    return <div>Access Denied</div>;
+  if (!session) {
+    redirect("/login");
   }
 
   return (
-    <div className="flex">
+    <div className=" flex">
       <LeftPanel />
       
       <div className="main-content">

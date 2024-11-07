@@ -2,13 +2,14 @@
 
 import LeftPanel from "@/components/left-panel";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 
 // Calendar Component
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [daySet, setDaySet] = useState(0);
-  const { data: session, status } = useSession();
 
   // Get the current month and year
   const month = currentDate.toLocaleString("default", { month: "long" }).toUpperCase();
@@ -68,13 +69,6 @@ const Calendar = () => {
     setDaySet((prev) => Math.min(prev + 1, daySets.length - 1));
   };
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (status === "unauthenticated") {
-    return <div>Access Denied</div>;
-  }
 
   return (
     <div className="calendar p-6">
@@ -147,15 +141,12 @@ const Calendar = () => {
 };
 
 // Payments Component
-export default function Payments() {
-  const { status } = useSession();
+export default async function Payments() {
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
+  const session = await getServerSession(authOptions);
 
-  if (status === "unauthenticated") {
-    return <div>Access Denied</div>;
+  if (!session) {
+    redirect("/login");
   }
 
   return (
