@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { signOut } from  "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 
 
 export default function LeftPanel() {
-
+    const { data: session } = useSession();
     const router = useRouter();
 
     const handleLogout = async () => {
@@ -39,7 +40,7 @@ export default function LeftPanel() {
                 <img src="images/avatar.jpg" alt="avatar" className="w-12 h-12 rounded-full mr-4 border border-white shadow-2xl"/>
                 <div>
                     <p className="text-white text-xs">Welcome back, </p>
-                    <p className="text-white text-3xl font-semibold">Jhenesis</p> 
+                    <p className="text-white text-3xl font-semibold">{session?.user?.name }</p> 
                 </div>
             </div>
 
