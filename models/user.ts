@@ -1,33 +1,35 @@
 import mongoose, { Schema, models } from "mongoose";
 
 const userSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    salt: {  // Add this field
-        type: String,
-        required: true,
-    },
     info: {
-        address: {
+        name: {
             type: String,
+            required: true,
         },
-        age: {
-            type: Number,
-        },
-        phone: {
+        email: {
             type: String,
+            required: true,
+            unique: true,
         },
+        password: {
+            type: String,
+            required: true,
+        },
+        salt: {  // Add this field
+            type: String,
+            required: true,
+        },
+        info: {
+            address: {
+                type: String,
+            },
+            age: {
+                type: Number,
+            },
+            phone: {
+                type: String,
+            }
+        }
     }
 }, { timestamps: true });
 

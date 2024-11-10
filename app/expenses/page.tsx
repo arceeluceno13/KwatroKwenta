@@ -10,6 +10,8 @@ export default async function Expenses() {
     redirect("/login");
   }
 
+  console.log("Session: ", session);
+
   return (
     <div className=" flex">
       <LeftPanel />
